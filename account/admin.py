@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, BoughtCourse, SavedBook, SavedCourse, Cart
+from .models import User, Cart
 
 
 @admin.register(User)
@@ -13,30 +13,6 @@ class UserAdmin(admin.ModelAdmin):
     )
 
 
-@admin.register(BoughtCourse)
-class BoughtCourseAdmin(admin.ModelAdmin):
-    list_display = (
-        'user',
-        'course',
-    )
-
-
-@admin.register(SavedBook)
-class SavedBookAdmin(admin.ModelAdmin):
-    list_display = (
-        'user',
-        'book',
-    )
-
-
-@admin.register(SavedCourse)
-class SavedCourseAdmin(admin.ModelAdmin):
-    list_display = (
-        'user',
-        'course',
-    )
-
-
 @admin.register(Cart)
 class CartAdmin(admin.ModelAdmin):
     list_display = (
@@ -44,4 +20,3 @@ class CartAdmin(admin.ModelAdmin):
         'book',
         'quantity',
     )
-
