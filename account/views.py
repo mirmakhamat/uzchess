@@ -5,8 +5,10 @@ from .serializers import UserSerializer, CartSerializer
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
 
-from courses.serializers import CourseListSerializer
+from courses.serializers import CourseListSerializer, CourseSerializer
+from courses.models import Course
 from library.serializers import BookListSerializer
+from django.shortcuts import get_object_or_404
 
 
 class UserCreateView(generics.CreateAPIView):
@@ -104,3 +106,16 @@ class UserCartView(generics.ListAPIView):
     def get_queryset(self):
         user = User.objects.get(email=self.request.user.email)
         return user.cart.all()
+
+
+class EnrollCourseView(generics.GenericAPIView):
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    serializer_class = CourseSerializer
+
+    def post(self, request, pk):
+        course = get_object_or_404(Course, pk=pk)
+        user = User.objects.get(email=request.user.email)
+        user.courses.add(course)
+        data = CourseSerializer(course).data
+        return Response(data)

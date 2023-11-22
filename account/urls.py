@@ -12,4 +12,5 @@ urlpatterns = [
     path('saved-courses/', views.UserSavedCoursesView.as_view(),
          name='user-saved-courses'),
     path('cart/', views.UserCartView.as_view(), name='user-cart'),
+    path('enroll/<pk>', views.EnrollCourseView.as_view(), name='enroll-course'),
 ]
